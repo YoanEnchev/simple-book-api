@@ -10,7 +10,7 @@ class BookController extends Controller
 {
     public function index()
     {
-        return BookResource::collection(Book::with('author')->paginate());
+        return BookResource::collection(Book::with('author')->paginate(100));
     }
 
     public function show(Book $book)
@@ -20,13 +20,16 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'author_id' => 'exists:users,id',
-        ]);
+        $data = $request->validate(config('validations.book'));
 
         return \App\Http\Resources\Book::make(Book::create($data));
+    }
+
+    public function update(Book $book, Request $request)
+    {
+        $data = $request->validate(config('validations.book'));
+
+        return \App\Http\Resources\Book::make($book->update($data));
     }
 
     public function destroy(Book $book)

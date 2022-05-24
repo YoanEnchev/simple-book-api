@@ -41,6 +41,12 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+
+// Make routes accessible from the client app (which is on other domain).
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: *');
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

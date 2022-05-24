@@ -14,10 +14,22 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        // Fields which data is ok to be shown to anyone publicly.
+        $result = [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'is_author' => $this->is_author
         ];
+
+        $route = $request->route()->getName();
+        
+        // On api login or register.
+        if($route === 'api.register' || $route === 'api.login') {
+            // Data that must be accessed only by the authenticated user.
+            $result['api_token'] = $this->api_token;
+        }
+
+        return $result;
     }
 }
