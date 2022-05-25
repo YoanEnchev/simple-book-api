@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'api.auth' => \App\Http\Middleware\Api\Authenticated::class,
         'api.author' => \App\Http\Middleware\Api\IsAuthor::class,
+        'api.book-author' => \App\Http\Middleware\Api\VerifyBookAndAuthorRelation::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

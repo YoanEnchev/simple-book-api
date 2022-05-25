@@ -23,7 +23,7 @@ class Authenticated
         $user = User::where('api_token', $apiToken)->first();
 
         if ($user === null) {
-            return abort(401);
+            return response()->json('User not found.', 401);
         }
 
         // Pass user data to the next middleware so it doesn't need to make another SQL request.

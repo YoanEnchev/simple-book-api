@@ -18,7 +18,7 @@ class Book extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'cover' => $this->cover,
+            'cover' => $this->cover_url,
             'published_at' => $this->created_at,
             'author' => User::make($this->author)
         ];

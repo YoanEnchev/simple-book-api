@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 
 
 Route::group(['middleware' => 'api.auth'], function () {
+    
+    // User is authenticated.
     Route::apiResource('books', 'BookController')->only('index', 'show');
 
     Route::get('/user', function (Request $request) {
@@ -11,7 +13,16 @@ Route::group(['middleware' => 'api.auth'], function () {
     });
 
     Route::group(['middleware' => 'api.author'], function () {
-        Route::apiResource('books', 'BookController')->only('store', 'update', 'destroy');
+        
+        // User is author.
+        Route::apiResource('books', 'BookController')->only('store');
+        
+        Route::group(['middleware' => 'api.book-author'], function () {
+            
+            // Book is published by the author.
+            Route::apiResource('books', 'BookController')->only('update', 'destroy');
+            Route::patch('/books/{book}/update-cover', 'BookController@updateCover');
+        });
     });
 });
 

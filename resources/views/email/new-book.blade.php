@@ -1,0 +1,1 @@
+<p>A new book was published. Check the book listing client.</p>

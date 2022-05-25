@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 
-class IsAuthor
+class VerifyBookAndAuthorRelation
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,10 @@ class IsAuthor
     public function handle($request, Closure $next, $guard = null)
     {
         // api_user parameter is set by the Authenticated middleware.
-        if ($request->api_user->is_author) {
-            return $next($request);
+        if($request->book->author_id !== $request->api_user->id) {
+            return response()->json('User is not the author of the book.', 401);
         }
 
-        return response()->json('User is not an author.', 401);
+        return $next($request);
     }
 }
